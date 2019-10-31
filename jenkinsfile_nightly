@@ -1,13 +1,13 @@
 pipeline {
   agent {label 'slave1'}
   stages	{
-    stage('SCM operation'){
+    stage('Checkout'){
       steps{
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/dot-net.git']]])
         bat 'MSBuild source/ViewEnvironment.sln'
       }
 	  }
-	  stage('compile'){
+	  stage('Compile'){
       steps{
         bat 'MSBuild source/ViewEnvironment.sln'
       }
