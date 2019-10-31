@@ -1,14 +1,33 @@
 pipeline {
+environment{
+BRANCH='master'
+}
   agent {label 'slave1'}
   stages	{
-    stage('Checkout'){
+    stage('clone'){
       steps{
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/dot-net.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: "*/${BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/dot-net.git']]])
       }
 	  }
 	  stage('Compile'){
       steps{
-        bat 'MSBuild source/ViewEnvironment.sln'
+        bat 'echo one'
+      }
+	  }
+	  stage('build'){
+      steps{
+        bat 'echo  test'
+      }
+	  }
+	  stage('deploy'){
+      steps{
+        bat 'echo test'
+      }
+	  }stage('package'){
+	  agent {label 'slave2'}
+      steps{
+	  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/dot-net.git']]])
+        bat 'echo test'
       }
 	  }
   }
