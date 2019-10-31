@@ -23,7 +23,8 @@ BRANCH='master'
       steps{
         bat 'echo test'
       }
-	  }stage('package'){
+	  }
+	  stage('package'){
 	  agent {label 'slave2'}
       steps{
 	  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/dot-net.git']]])
